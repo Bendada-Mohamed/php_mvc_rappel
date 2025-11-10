@@ -2,8 +2,50 @@
 require "./models/etudiantModel.php";
 
 class EtudiantControlleur{
-  public static function lister($filtre, $valeur){
-    $data = EtudiantModel::lister($filtre, $valeur);
-    include "./vues/lister.php";
+  public static function lister(){
+    $data = EtudiantModel::lister();
+    include "./vues/Etudiants.php";
+  }
+  public static function Ajouter(){
+    if($_SERVER['REQUEST_METHOD'] === "POST"){
+      $nom = trim($_POST['Nom']);
+      $prenom = trim($_POST['Prenom']);
+      if($nom === '' || $prenom === ''){
+        $error = "Nom et prenom obligatoires.";
+      }else{
+        EtudiantModel::Ajouter($nom, $prenom);
+      }
+    }
+    self::lister();
+  }
+  public static function Supprimer(){
+    if(isset($_GET['id'])){
+      $id = $_GET['id'];
+      EtudiantModel::Supprimer($id);
+    }
+    self::lister();
+  }
+  public static function Modifier(){
+    if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_GET['id'])){
+      $nom = trim($_POST['Nom']);
+      $prenom = trim($_POST['Prenom']);
+      $id = $_GET['id'];
+      if($nom === '' || $prenom === ''){
+        $error = "Nom et prenom obligatoires.";
+      }else{
+        EtudiantModel::Modifier($id,$nom, $prenom);
+      }
+    }
+    self::lister();
+  }
+
+  public static function Rechercher(){
+    if(isset($_GET['Valeur']) && isset($_GET['filtre'])){
+      $param = $_GET['filtre'];
+      $valeur = $_GET['Valeur'];
+      $data = EtudiantModel::lister($param, $valeur);
+    }else{
+      self::lister();
+    }
   }
 }
