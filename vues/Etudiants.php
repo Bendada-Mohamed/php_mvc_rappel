@@ -7,6 +7,17 @@
 
   </head>
   <body class="container">
+    <?php if(isset($_GET['success'])): ?>
+      <div class="alert alert-success">
+          Étudiant ajouté avec succès !
+      </div>
+    <?php endif; ?>
+
+    <?php if(isset($error)): ?>
+      <div class="alert alert-danger">
+          <?= htmlspecialchars($error) ?>
+      </div>
+    <?php endif; ?>
     
     <!-- Formulaire de recherche des etudiants -->
     <form method="GET" action="index.php?action=RechercherEtudiant">
