@@ -47,12 +47,14 @@ class EtudiantControlleur{
   }
 
   public static function Rechercher(){
-    if(isset($_GET['Valeur']) && isset($_GET['filtre'])){
-      $param = $_GET['filtre'];
-      $valeur = $_GET['Valeur'];
+    $param = $_GET['filtre'] ?? '';
+    $valeur = $_GET['Valeur'] ?? '';
+    if($param !== '' && $valeur !== ''){
       $data = EtudiantModel::lister($param, $valeur);
+
     }else{
-      self::lister();
+      $data = EtudiantModel::lister();
     }
+    include "./vues/Etudiants.php";
   }
 }

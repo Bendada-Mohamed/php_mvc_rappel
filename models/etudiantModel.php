@@ -1,38 +1,43 @@
 <?php
 require "./config/db.php";
 class EtudiantModel{
-  public static function lister($param="", $valeur=""){
-    $conn = Gestionscolarite::connect();
-    
-     $requete =
-      "SELECT et.NEtudiant, et.Nom, et.Prenom, 
-      count(m.CodeMat) as NombreEvaluation,  
-      sum(ev.Note * m.CoeffMat ) as AditionProduit, 
-      sum(m.CoeffMat) as AditionCoef
-      FROM etudiant et 
-      JOIN evaluer ev 
-      ON et.NEtudiant = ev.NEtudiant 
-      JOIN matiere m 
-      ON m.CodeMat = ev.CodeMat
-      group by et.NEtudiant";
+public static function lister($param="", $valeur=""){
+  $conn = Gestionscolarite::connect();
 
-      if($param === "Nom"){
-        $requete .= " HAVING et.Nom LIKE :valeur";
-      }elseif($param === "Prenom"){
-        $requete .= " HAVING et.Prenom = :valeur";
-      }
-    try{
+  $requete =
+  "SELECT et.NEtudiant, et.Nom, et.Prenom, 
+      COUNT(m.CodeMat) AS NombreEvaluation,
+      SUM(ev.Note * m.CoeffMat) AS AditionProduit,
+      SUM(m.CoeffMat) AS AditionCoef
+  FROM etudiant et
+  JOIN evaluer ev ON et.NEtudiant = ev.NEtudiant
+  JOIN matiere m ON m.CodeMat = ev.CodeMat";
+
+  // Utiliser WHERE pour les filtres simples
+  if($param === "Nom"){
+      $requete .= " WHERE et.Nom LIKE :valeur";
+  } elseif($param === "Prenom"){
+      $requete .= " WHERE et.Prenom LIKE :valeur";
+  }
+
+  // GROUP BY après le WHERE
+  $requete .= " GROUP BY et.NEtudiant";
+  try {
       $stmt = $conn->prepare($requete);
+
       if($param === "Nom" || $param === "Prenom"){
-        $stmt->bindValue(':valeur', "%$valeur%", PDO::PARAM_STR);
+          $stmt->bindValue(':valeur', "%$valeur%", PDO::PARAM_STR);
       }
+
       $stmt->execute();
       return $stmt->fetchAll();
-    }catch(PDOException $e){
-      echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
-      return [];
-    }
   }
+  catch(PDOException $e){
+      echo "Erreur SQL : " . $e->getMessage();
+      return [];
+  }
+}
+
 
   public static function Ajouter($nom, $prenom){
     $conn = Gestionscolarite::connect();

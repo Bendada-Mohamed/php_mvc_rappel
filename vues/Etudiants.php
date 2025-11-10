@@ -7,12 +7,14 @@
 
   </head>
   <body class="container">
+    <!-- Message si succes est pleine -->
     <?php if(isset($_GET['success'])): ?>
       <div class="alert alert-success">
           Étudiant ajouté avec succès !
       </div>
     <?php endif; ?>
 
+    <!-- Message si error est pleine  -->
     <?php if(isset($error)): ?>
       <div class="alert alert-danger">
           <?= htmlspecialchars($error) ?>
@@ -20,30 +22,26 @@
     <?php endif; ?>
     
     <!-- Formulaire de recherche des etudiants -->
-    <form method="GET" action="index.php?action=RechercherEtudiant">
+    <form method="get" action="index.php">
+
+      <input type="hidden" name="action" value="RechercherEtudiant">
+      <input class="form-control" type="text" placeholder="Rechercher (Nom, Prenom)..." name="Valeur" required>
+
+      <div class="mb-3 form-check">
+        <input type="radio" name="filtre" value="Nom" id="Nom" class="form-check-input" required>
+        <label for="Nom" class="form-check-label">Nom</label>
+      </div>
+
+      <div class="mb-3 form-check">
+        <input type="radio" name="filtre" value="Prenom" id="Prenom" class="form-check-input" required>
+        <label for="Prenom" class="form-check-label">Prenom</label>
+      </div>
 
       <div class="mb-3">
-        <button type="submit" class="btn btn-primary">
-          Rechercher
-        </button>
-        <input class="form-control" type="text" placeholder="Rechercher (Nom, Prenom)..." name="Valeur" required>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
       </div>
-
-      <div class="mb-3 form-check">
-        <label for="nom" class="form-check-label">
-          Nom 
-        </label>
-        <input type="radio" name="filtre" value="Nom" id="Nom" class="form-check-input">
-      </div>
-
-      <div class="mb-3 form-check">
-        <label for="prenom" class="form-check-label">
-          Prenom 
-        </label>
-        <input type="radio" name="filtre" value="Prenom" id="Prenom" class="form-check-input">
-      </div>
-
     </form>
+
 
     <!-- Formulaire d'ajout d'etudiants -->
     <form method="post" action="index.php?action=AjouterEtudiant">
@@ -52,14 +50,14 @@
         <label for="Nom" class="form-label">
           Nom : 
         </label>
-        <input class="form-control" type="text" name="Nom" placeholder="Ex. Alaoui" required>
+        <input class="form-control" type="text" name="Nom" placeholder="Ex. Alaoui" >
       </div>
 
       <div class="mb-3">
         <label for="Prenom" class="form-label">
           Prenom :
         </label>
-        <input class="form-control" type="text" name="Prenom" placeholder="Ex. Sara" required>
+        <input class="form-control" type="text" name="Prenom" placeholder="Ex. Sara" >
       </div>
 
       <button class="mb-3 btn btn-primary" type="submit">Enregistrer</button>
