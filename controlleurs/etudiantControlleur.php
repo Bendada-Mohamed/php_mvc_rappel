@@ -4,7 +4,7 @@ require "./models/etudiantModel.php";
 class EtudiantControlleur{
   public static function lister(){
     $data = EtudiantModel::lister();
-    include "./vues/Etudiants.php";
+    include "./vues/Etudiants/index.php";
   }
 
   public static function Ajouter(){
@@ -14,7 +14,7 @@ class EtudiantControlleur{
       if($nom === '' || $prenom === ''){
         $error = "Nom et prenom obligatoires.";
         $data = EtudiantModel::Lister();
-        include "./vues/Etudiants.php";
+        include "./vues/Etudiants/index.php";
         return;
       }
       EtudiantModel::Ajouter($nom, $prenom);
@@ -25,8 +25,8 @@ class EtudiantControlleur{
   }
 
   public static function Supprimer(){
-    if(isset($_GET['NEtudiant'])){
-      $NEtudiant = $_GET['NEtudiant'];
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+      $NEtudiant = $_POST['NEtudiant'];
       EtudiantModel::Supprimer($NEtudiant);
     }
     self::lister();
@@ -39,7 +39,7 @@ class EtudiantControlleur{
       $NEtudiant = $_GET['NEtudiant'];
       if($nom === '' || $prenom === ''){
         $error = "Nom et prenom obligatoires.";
-        include "./vues/Etudiants.php";
+        include "./vues/Etudiants/index.php";
         return;
       }
       EtudiantModel::Modifier($NEtudiant,$nom, $prenom);
@@ -58,6 +58,6 @@ class EtudiantControlleur{
     }else{
       $data = EtudiantModel::lister();
     }
-    include "./vues/Etudiants.php";
+    include "./vues/Etudiants/index.php";
   }
 }
