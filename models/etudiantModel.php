@@ -53,16 +53,16 @@ public static function lister($param="", $valeur=""){
     }
   }
 
-  public static function Supprimer($id){
+  public static function Supprimer($NEtudiant){
   $conn = Gestionscolarite::connect();
   try {
     $conn->beginTransaction();
 
-    $stmt1 = $conn->prepare("DELETE FROM evaluer WHERE NEtudiant = :id");
-    $stmt1->execute([':id' => $id]);
+    $stmt1 = $conn->prepare("DELETE FROM evaluer WHERE NEtudiant = :NEtudiant");
+    $stmt1->execute([':NEtudiant' => $NEtudiant]);
 
-    $stmt2 = $conn->prepare("DELETE FROM etudiant WHERE NEtudiant = :id");
-    $result = $stmt2->execute([':id' => $id]);
+    $stmt2 = $conn->prepare("DELETE FROM etudiant WHERE NEtudiant = :NEtudiant");
+    $result = $stmt2->execute([':NEtudiant' => $NEtudiant]);
     
     $conn->commit();
     return true;
@@ -72,12 +72,12 @@ public static function lister($param="", $valeur=""){
   }
 }
 
-public static function Modifier($id, $nom, $prenom){
+public static function Modifier($NEtudiant, $nom, $prenom){
   $conn = Gestionscolarite::connect();
   try{
-    $request = "UPDATE etudiant SET Nom=:nom, Prenom=:prenom WHERE NEtudiant= :id";
+    $request = "UPDATE etudiant SET Nom=:nom, Prenom=:prenom WHERE NEtudiant= :NEtudiant";
     $stmt = $conn->prepare($request);
-    return $stmt->execute([':id' => $id, ':nom' => $nom, ':prenom' => $prenom]);
+    return $stmt->execute([':NEtudiant' => $NEtudiant, ':nom' => $nom, ':prenom' => $prenom]);
   }catch(PDOException $e){
     echo "Erreur lors de la suppression : " . $e->getMessage();
     return false;

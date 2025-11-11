@@ -25,23 +25,26 @@ class EtudiantControlleur{
   }
 
   public static function Supprimer(){
-    if(isset($_GET['id'])){
-      $id = $_GET['id'];
-      EtudiantModel::Supprimer($id);
+    if(isset($_GET['NEtudiant'])){
+      $NEtudiant = $_GET['NEtudiant'];
+      EtudiantModel::Supprimer($NEtudiant);
     }
     self::lister();
   }
 
   public static function Modifier(){
-    if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_GET['id'])){
+    if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_GET['NEtudiant'])){
       $nom = trim($_POST['Nom']);
       $prenom = trim($_POST['Prenom']);
-      $id = $_GET['id'];
+      $NEtudiant = $_GET['NEtudiant'];
       if($nom === '' || $prenom === ''){
         $error = "Nom et prenom obligatoires.";
-      }else{
-        EtudiantModel::Modifier($id,$nom, $prenom);
+        include "./vues/Etudiants.php";
+        return;
       }
+      EtudiantModel::Modifier($NEtudiant,$nom, $prenom);
+      header("Location: index.php?action=Etudiant&success=1");
+      exit;
     }
     self::lister();
   }

@@ -24,7 +24,11 @@
     <!-- Formulaire de recherche des etudiants -->
     <form method="get" action="index.php">
 
+
+          <!-- Ajout du input hidden pour corriger le bug -->
       <input type="hidden" name="action" value="RechercherEtudiant">
+
+
       <input class="form-control" type="text" placeholder="Rechercher (Nom, Prenom)..." name="Valeur" required>
 
       <div class="mb-3 form-check">
@@ -89,17 +93,53 @@
               <button class="btn btn-primary" type="button">
                 Voir
               </button>
-              <button class="btn btn-primary" type="button">
-                Modifier Étudiant
+              <button data-bs-toggle="modal" data-bs-target="#modifier-modal" class="btn btn-primary" type="button">
+              modifier
               </button>
               <button class="btn btn-danger" type="button">
+                <a class="btn" href="index.php?action=SupprimerEtudiant&NEtudiant=<?=htmlspecialchars($value['NEtudiant'])?>">
                   Supprimer
+                </a>
               </button>
             </td>
           </tr>
+          <div class="modal fade" tabindex="-1" id="modifier-modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modifier Etudiant #<?= htmlspecialchars($value['NEtudiant'])?></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+              <form action="index.php?action=ModifierEtudiant&NEtudiant=<?= htmlspecialchars($value['NEtudiant'])?>" method="post">
+
+                <div class="modal-body">
+                 
+                    <div class="mb-3">
+                      <label for="Nom" class="form-label">Nom :</label>
+                      <input type="text" name="Nom" class="form-control" value="<?= htmlspecialchars($value['Nom'])?>" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="Prenom" class="form-label">Prenom :</label>
+                      <input type="text" name="Prenom" class="form-control" value="<?= htmlspecialchars($value['Prenom'])?>" required>
+                    </div>
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+
+              </form>
+              </div>
+            </div>
+          </div>
         <?php endforeach;?>
       </tbody>
     </table>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
   </body>
 </html>
