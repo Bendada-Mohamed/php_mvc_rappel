@@ -13,7 +13,6 @@ public static function lister($param="", $valeur=""){
   JOIN evaluer ev ON et.NEtudiant = ev.NEtudiant
   JOIN matiere m ON m.CodeMat = ev.CodeMat";
 
-  // Utiliser WHERE pour les filtres simples
   if($param === "Nom"){
       $requete .= " WHERE et.Nom LIKE :valeur";
   } elseif($param === "Prenom"){
