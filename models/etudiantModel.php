@@ -6,9 +6,9 @@ public static function lister($param="", $valeur=""){
 
   $requete =
   "SELECT et.NEtudiant, et.Nom, et.Prenom, 
-      COUNT(m.CodeMat) AS NombreEvaluation,
-      SUM(ev.Note * m.CoeffMat) AS AditionProduit,
-      SUM(m.CoeffMat) AS AditionCoef
+    COUNT(m.CodeMat) AS NombreEvaluation,
+    SUM(ev.Note * m.CoeffMat) AS AditionProduit,
+    SUM(m.CoeffMat) AS AditionCoef
   FROM etudiant et
   JOIN evaluer ev ON et.NEtudiant = ev.NEtudiant
   JOIN matiere m ON m.CodeMat = ev.CodeMat";

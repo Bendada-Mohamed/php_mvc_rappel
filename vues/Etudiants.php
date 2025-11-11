@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <title>Étudiants</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
   </head>
+
   <header>
-    <?= include "Header.html"?>
+    <?= include "Header.php"?>
   </header>
+
   <body class="container">
     <!-- Message si succes est pleine -->
     <?php if(isset($_GET['success'])): ?>
@@ -27,7 +28,7 @@
     <!-- Formulaire de recherche des etudiants -->
     <form method="get" action="index.php">
 
-      <!-- Ajout du input hidden pour corriger le bug -->
+      <!-- Ajout du input hidden !!! -->
       <input type="hidden" name="action" value="RechercherEtudiant">
 
 
@@ -49,12 +50,13 @@
     </form>
     <button data-bs-toggle="modal" data-bs-target="#ajouter-modal" type="button" class="btn btn-secondary mb-3">Nouvel Etudiant</button>
 
+
     <!-- Formulaire inside modal d'ajout d'etudiants -->
     <div class="modal" tabindex="-1" id="ajouter-modal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
+            <h5 class="modal-title">Ajouter un nouvel étudiant</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -101,37 +103,6 @@
 
       <tbody>
         <?php foreach($data as $value): ?>
-        <!-- Modification Modal -->
-          <div class="modal fade" tabindex="-1" id="modifier-modal-<?= $value['NEtudiant'] ?>">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Modifier Etudiant #<?= htmlspecialchars($value['NEtudiant'])?></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-              <form action="index.php?action=ModifierEtudiant&NEtudiant=<?= htmlspecialchars($value['NEtudiant'])?>" method="post">
-
-                <div class="modal-body">
-                 
-                    <div class="mb-3">
-                      <label for="Nom" class="form-label">Nom :</label>
-                      <input type="text" name="Nom" class="form-control" value="<?= htmlspecialchars($value['Nom'])?>" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="Prenom" class="form-label">Prenom :</label>
-                      <input type="text" name="Prenom" class="form-control" value="<?= htmlspecialchars($value['Prenom'])?>" required>
-                    </div>
-                  
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                  <button type="submit" class="btn btn-primary">Enregistrer</button>
-                </div>
-
-              </form>
-              </div>
-            </div>
-          </div>
           <tr>
             <td><?= htmlspecialchars($value['NEtudiant']) ?></td>
             <td><?= htmlspecialchars($value['Nom']) ?></td>
@@ -142,9 +113,8 @@
               <button class="btn btn-primary" type="button">
                 Voir
               </button>
-              <button data-bs-toggle="modal" data-bs-target="#modifier-modal-<?= $value['NEtudiant'] ?>"
- class="btn btn-primary" type="button">
-              modifier
+              <button class="btn btn-primary btn-modifier" data-bs-toggle="modal" data-bs-target="#modifier-modal" data-id="<?= htmlspecialchars($value['NEtudiant']) ?>"data-nom="<?= htmlspecialchars($value['Nom']) ?>"data-prenom="<?= htmlspecialchars($value['Prenom']) ?>">
+               Modifier
               </button>
               <button class="btn btn-danger" type="button">
                 <a class="btn" href="index.php?action=SupprimerEtudiant&NEtudiant=<?=htmlspecialchars($value['NEtudiant'])?>">
@@ -156,10 +126,48 @@
         <?php endforeach;?>
       </tbody>
     </table>
-
-    
-
+    <!-- Modal Modifier Étudiant -->
+    <div class="modal fade" id="modifier-modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modifier Étudiant</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="modifier-form" method="post" action="">
+              <input type="hidden" name="NEtudiant" id="modal-NEtudiant">
+              <div class="mb-3">
+                <label for="modal-Nom" class="form-label">Nom :</label>
+                <input type="text" class="form-control" id="modal-Nom" name="Nom" required>
+              </div>
+              <div class="mb-3">
+                <label for="modal-Prenom" class="form-label">Prenom :</label>
+                <input type="text" class="form-control" id="modal-Prenom" name="Prenom" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.querySelectorAll('.btn-modifier').forEach(button => {
+        button.addEventListener('click', () => {
+          const id = button.dataset.id;
+          const nom = button.dataset.nom;
+          const prenom = button.dataset.prenom;
+
+          document.getElementById('modal-NEtudiant').value = id;
+          document.getElementById('modal-Nom').value = nom;
+          document.getElementById('modal-Prenom').value = prenom;
+
+          // Modifier l'action du formulaire dynamiquement
+          document.getElementById('modifier-form').action = `index.php?action=ModifierEtudiant&NEtudiant=${id}`;
+        });
+      });
+    </script>
 
   </body>
 </html>
