@@ -24,7 +24,7 @@
               <a class="nav-link" href="index.php?action=Matieres">Matieres</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.php?action=Evaluations">Evaluations</a>
+              <a class="nav-link" href="index.php?action=Evaluation">Evaluations</a>
             </li>
           </ul>
         </div>

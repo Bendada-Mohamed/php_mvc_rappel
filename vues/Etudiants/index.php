@@ -25,4 +25,4 @@
 
 <?php include __DIR__  . "/FormModifier.php" ?>
 
-<?php include __DIR__  . "/../layout/Footer.php" ?>
+<?php include __DIR__  . "/../layout/FooterEtu.php" ?>

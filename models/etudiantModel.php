@@ -1,5 +1,5 @@
 <?php
-require "./config/db.php";
+require_once "./config/db.php";
 class EtudiantModel{
 public static function lister($param="", $valeur=""){
   $conn = Gestionscolarite::connect();

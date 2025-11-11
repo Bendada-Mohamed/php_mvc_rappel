@@ -1,5 +1,5 @@
 <?php
-require "./models/etudiantModel.php";
+require_once "./models/etudiantModel.php";
 
 class EtudiantControlleur{
   public static function lister(){

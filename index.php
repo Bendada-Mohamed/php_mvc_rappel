@@ -1,8 +1,8 @@
 <?php
-require "controlleurs/etudiantControlleur.php";
+require_once "controlleurs/etudiantControlleur.php";
+require_once "controlleurs/evaluationControlleur.php";
 
 $action = $_GET['action'] ?? "Etudiant";
-
 switch($action){
   case 'Etudiant':
     EtudiantControlleur::lister();
@@ -23,7 +23,12 @@ switch($action){
   case 'ModifierEtudiant':
     EtudiantControlleur::Modifier();
     break;
-
+  case 'Evaluation';
+    EvaluationControlleur::lister();
+    break;
+  case 'ModifierEvaluation':
+    EvaluationControlleur::modifier();
+    break;
   default:
     echo "Action non trouvée.";
 }
