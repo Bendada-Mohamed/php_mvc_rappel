@@ -13,7 +13,38 @@ class EvaluationControlleur{
       $oldDate = $_GET['date'];
       $newDate = $_POST['Date'];
       $note = $_POST['Note'];
-      EvaluationModel::modifier($oldDate, $newDate, $note, $NEtudiant, $CodeMat);
+      if(EvaluationModel::modifier($oldDate, $newDate, $note, $NEtudiant, $CodeMat)){
+        $message = "Evaluation modifier avec succes!";
+      }else{
+        $message = "Probleme lors de la modification!";
+      };
+    }
+  }
+  public static function supprimer(){
+    if($_SERVER['REQUEST_METHOD'] === "POST"){
+      $NEtudiant = $_POST['NEtudiant'];
+      $CodeMat = $_POST['CodeMat'];
+      $date = $_POST['Date'];
+      if(EvaluationModel::supprimer($NEtudiant, $CodeMat, $date)){
+        $message = "Evaluation supprimer avec succes!";
+      }else {
+        $message = "Probleme lors de la suprission!";
+      }
+    }
+    self::lister();
+  }
+  public static function ajouter(){
+
+    if($_SERVER["REQUEST_METHOD"] === "POST"){
+      $NEtudiant = $_POST['NEtudiant'];
+      $CodeMat = $_POST['CodeMat'];
+      $Date = $_POST['Date'];
+      $Note = $_POST['Note'];
+      if(EvaluationModel::ajouter($NEtudiant, $CodeMat, $Date, $Note)){
+        $message = "Evaluation ajoute avec succes";
+      }else{
+        $message = "Probleme lors de  l'ajout!";
+      };
       self::lister();
     }
   }

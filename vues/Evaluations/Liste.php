@@ -35,8 +35,11 @@
           </button>
           <form 
             method="post" 
-            action="index.php?action=SupprimerEtudiant" 
+            action="index.php?action=SupprimerEvaluation" 
             style="display:inline;">
+            <input type="hidden" name="NEtudiant" value="<?= $value['NEtudiant'] ?>">
+            <input type="hidden" name="CodeMat" value="<?= $value['CodeMat'] ?>">
+            <input type="hidden" name="Date" value="<?= $value['Date'] ?>">
             <button 
               type="submit" 
               class="btn btn-danger" 

@@ -29,6 +29,12 @@ switch($action){
   case 'ModifierEvaluation':
     EvaluationControlleur::modifier();
     break;
+  case 'SupprimerEvaluation':
+    EvaluationControlleur::supprimer();
+    break;
+  case 'AjouterEvaluation':
+    EvaluationControlleur::ajouter();
+    break;
   default:
     echo "Action non trouvée.";
 }
