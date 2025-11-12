@@ -36,23 +36,23 @@
 
 </form>
 <script>
-document.querySelectorAll('.form-select, input[type="date"]').forEach(el => {
-  el.addEventListener('change', () => {
-    const rechercherForm = document.getElementById('rechercher-form');
+const rechercherForm = document.getElementById('rechercher-form');
 
-    // Ajout du champ "action"
-    let inputAction = rechercherForm.querySelector('input[name="action"]');
-    if (!inputAction) {
-      inputAction = document.createElement('input');
-      inputAction.type = 'hidden';
-      inputAction.name = 'action';
-      rechercherForm.appendChild(inputAction);
-    }
-    inputAction.value = 'RechercherEvaluation';
-
-    // Soumission du formulaire
-    rechercherForm.submit();
+if (rechercherForm) {
+  // On sélectionne seulement les select et input[type=date] à l'intérieur du formulaire rechercherForm
+  rechercherForm.querySelectorAll('.form-select, input[type="date"]').forEach(el => {
+    el.addEventListener('change', () => {
+      let inputAction = rechercherForm.querySelector('input[name="action"]');
+      if (!inputAction) {
+        inputAction = document.createElement('input');
+        inputAction.type = 'hidden';
+        inputAction.name = 'action';
+        rechercherForm.appendChild(inputAction);
+      }
+      inputAction.value = 'RechercherEvaluation';
+      rechercherForm.submit();
+    });
   });
-});
+}
 
 </script>

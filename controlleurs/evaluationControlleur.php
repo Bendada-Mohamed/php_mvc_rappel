@@ -3,7 +3,7 @@ require_once "./models/evaluationModel.php";
 
 class EvaluationControlleur{
   public static function lister(){
-    [$data, $etudiants, $matiere] = EvaluationModel::lister();
+    [$data, $etudiants, $matieres] = EvaluationModel::lister();
     include "./vues/Evaluations/index.php";
   }
   public static function modifier(){

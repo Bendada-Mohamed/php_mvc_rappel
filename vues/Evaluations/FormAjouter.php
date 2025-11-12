@@ -11,27 +11,46 @@
 
           <div class="mb-3">
             <label for="NEtudiant" class="form-label">
-              Numero Etudiant : 
+              Etudiant : 
             </label>
-            <input class="form-control" type="text" name="NEtudiant" placeholder="Ex. 1" >
+            <select class="form-select" name="NEtudiant" id="NEtudiant">
+              <option value="" selected>
+                Choisir...
+              </option>
+              <?php foreach($etudiants as $value): ?>
+              <option value="<?=$value['NEtudiant']?>">
+                <?=$value['Nom'] . " " . $value['Prenom']?>
+              </option>
+              <?php endforeach; ?>
+            </select>
           </div>
           <div class="mb-3">
             <label for="CodeMat" class="form-label">
-              Code Matiere :
+              Matiere :
             </label>
-            <input class="form-control" type="text" name="CodeMat" placeholder="Ex. 2" >
+            <select class="form-select" name="CodeMat" id="CodeMat">
+              <option value="" selected>
+                Choisir...
+              </option>
+              <?php foreach($matieres as $value): ?>
+              <option value="<?=$value['CodeMat']?>">
+                <?=$value['LibelleMat']?>
+              </option>
+              <?php endforeach; ?>
+            </select>
           </div>
           <div class="mb-3">
             <label for="Date" class="form-label">
               Date :
             </label>
-            <input class="form-control" type="text" name="Date" placeholder="Ex. 2025-11-12" >
+            <input class="form-control" type="date" name="Date" value=<?php echo date('Y-m-d') ?>>
           </div>
           <div class="mb-3">
             <label for="Note" class="form-label">
               Note :
             </label>
             <input class="form-control" type="text" name="Note" placeholder="Ex. 14.50" >
+            <small id="noteAide" class="form-text text-muted">Valeur entre 0 et 20</small>
           </div>
           <button class="mb-3 btn btn-primary" type="submit">Enregistrer</button>
         </form>
