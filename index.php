@@ -35,6 +35,9 @@ switch($action){
   case 'AjouterEvaluation':
     EvaluationControlleur::ajouter();
     break;
+  case 'RechercherEvaluation';
+    EvaluationControlleur::rechercher();
+    break;
   default:
     echo "Action non trouvée.";
 }

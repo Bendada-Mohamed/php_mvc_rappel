@@ -10,7 +10,6 @@
       <th scope="col">Actions</th>
     </tr>
   </thead>
-
   <tbody>
     <?php foreach($data as $value): ?>
       <tr>
@@ -52,3 +51,8 @@
     <?php endforeach;?>
   </tbody>
 </table>
+<?php 
+echo "<pre>";
+print_r($data);
+echo "</pre>";
+?>

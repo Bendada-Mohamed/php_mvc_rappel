@@ -3,7 +3,7 @@ require_once "./models/evaluationModel.php";
 
 class EvaluationControlleur{
   public static function lister(){
-    $data = EvaluationModel::lister();
+    [$data, $etudiants, $matiere] = EvaluationModel::lister();
     include "./vues/Evaluations/index.php";
   }
   public static function modifier(){
@@ -34,7 +34,6 @@ class EvaluationControlleur{
     self::lister();
   }
   public static function ajouter(){
-
     if($_SERVER["REQUEST_METHOD"] === "POST"){
       $NEtudiant = $_POST['NEtudiant'];
       $CodeMat = $_POST['CodeMat'];
@@ -48,4 +47,14 @@ class EvaluationControlleur{
       self::lister();
     }
   }
+public static function rechercher() {
+  $NEtudiant = $_GET['Etudiant'] ?? null;
+  $CodeMat = $_GET['Matiere'] ?? null;
+  $datedebut = $_GET['datedebut'] ?? null;
+  $datefin = $_GET['datefin'] ?? null;
+
+  [$data, $etudiants, $matieres] = EvaluationModel::rechercher($NEtudiant, $CodeMat, $datedebut, $datefin);
+  
+  include "./vues/Evaluations/index.php";
+}
 }

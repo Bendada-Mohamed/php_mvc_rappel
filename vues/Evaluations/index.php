@@ -2,6 +2,8 @@
 
 
 <?php include __DIR__  . "/FormAjouter.php" ?>
+<?php include __DIR__  . "/FormRechercher.php" ?>
+
 <button data-bs-toggle="modal" data-bs-target="#ajouter-modal" type="button" class="btn btn-secondary mb-3">Nouvelle Evaluation</button>
 
 <?php include __DIR__  . "/Liste.php" ?>
