@@ -1,4 +1,4 @@
-<!-- Tableau d'affichage dynamique des etudiants  -->
+<!-- Tableau d'affichage dynamique des evaluations  -->
 <table class="table table-primary table-striped">
   <thead>
     <tr>
@@ -25,7 +25,7 @@
           data-bs-toggle="modal" 
           data-bs-target="#modifier-modal" 
           data-netudiant="<?=htmlspecialchars($value['NEtudiant'])?>"
-          data-codemat="<?=htmlspecialchars($value['NEtudiant'])?>"
+          data-codemat="<?=htmlspecialchars($value['CodeMat'])?>"
           data-date="<?= htmlspecialchars($value['Date']) ?>"
           data-nomcomplet="<?= htmlspecialchars($value['NomComplet']) ?>"
           data-matiere="<?= htmlspecialchars($value['LibelleMat']) ?>" 

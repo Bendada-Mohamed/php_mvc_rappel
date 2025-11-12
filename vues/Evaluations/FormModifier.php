@@ -17,17 +17,17 @@
 
               <div class="mb-3">
                 <label for="modal-Etudiant" class="form-label">Etudiant :</label>
-                <input type="text" class="form-control" id="modal-Etudiant" name="Etudiant" required>
+                <input type="text" class="form-control text-muted" id="modal-Etudiant" name="Etudiant" readonly>
               </div>
 
               <div class="mb-3">
                 <label for="modal-Matiere" class="form-label">Matiere :</label>
-                <input type="text" class="form-control" id="modal-Matiere" name="Matiere" required>
+                <input type="text" class="form-control text-muted" id="modal-Matiere" name="Matiere" readonly>
               </div>
               
               <div class="mb-3">
                 <label for="modal-Coeff" class="form-label">Coeff :</label>
-                <input type="text" class="form-control" id="modal-Coeff" name="Coeff" required>
+                <input type="text" class="form-control text-muted" id="modal-Coeff" name="Coeff" readonly>
               </div>
 
               <div class="mb-3">

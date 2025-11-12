@@ -13,7 +13,24 @@ class EvaluationModel{
       return;
     }
   }
-  public static function modifier(){
-    // code
+  public static function modifier($oldDate, $newDate, $note, $NEtudiant, $CodeMat){
+    $conn = Gestionscolarite::connect();
+    $requete = "UPDATE evaluer SET Date=:newDate, Note=:note WHERE NEtudiant=:NEtudiant AND CodeMat=:CodeMat AND Date=:oldDate";
+
+    try{
+      $stmt = $conn->prepare($requete);
+
+      return $stmt->execute([
+        ":newDate" => $newDate, 
+        ":note" => $note, 
+        ":NEtudiant" => $NEtudiant,
+        ":CodeMat" => $CodeMat,
+        ":oldDate" => $oldDate
+    ] );
+
+    }catch(PDOException $e){
+      echo "SQL ERROR : " . $e->getMessage();
+      return false;
+    }
   }
 }

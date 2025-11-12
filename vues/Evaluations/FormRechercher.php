@@ -1,4 +1,4 @@
-<!-- Formulaire de recherche des etudiants -->
+<!-- Formulaire de recherche des evaluation -->
     <form method="get" action="index.php">
 
       <!-- Ajout du input hidden !!! -->
