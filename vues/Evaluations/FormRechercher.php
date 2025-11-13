@@ -54,5 +54,4 @@ if (rechercherForm) {
     });
   });
 }
-
 </script>

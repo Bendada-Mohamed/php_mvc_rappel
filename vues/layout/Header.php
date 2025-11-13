@@ -12,7 +12,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse">
-          <a class="navbar-brand" href="#">Gestion Scolarite</a>
+          <a class="navbar-brand" href="index.php?action=tableauDeBord">Gestion Scolarite</a>
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
               <a class="nav-link" href="index.php?action=tableauDeBord">Tableau de bord</span></a>

@@ -53,33 +53,35 @@ public static function lister($param="", $valeur=""){
   }
 
   public static function Supprimer($NEtudiant){
-  $conn = Gestionscolarite::connect();
-  try {
-    $conn->beginTransaction();
+    $conn = Gestionscolarite::connect();
+    try{
+      $conn->beginTransaction();
 
-    $stmt1 = $conn->prepare("DELETE FROM evaluer WHERE NEtudiant = :NEtudiant");
-    $stmt1->execute([':NEtudiant' => $NEtudiant]);
+      $stmt1 = $conn->prepare("DELETE FROM evaluer WHERE NEtudiant = :NEtudiant");
+      $stmt1->execute([':NEtudiant' => $NEtudiant]);
 
-    $stmt2 = $conn->prepare("DELETE FROM etudiant WHERE NEtudiant = :NEtudiant");
-    $result = $stmt2->execute([':NEtudiant' => $NEtudiant]);
-    
-    $conn->commit();
-    return true;
-  } catch(PDOException $e) {
-    echo "Erreur lors de la suppression : " . $e->getMessage();
-    return false;
+      $stmt2 = $conn->prepare("DELETE FROM etudiant WHERE NEtudiant = :NEtudiant");
+      $result = $stmt2->execute([':NEtudiant' => $NEtudiant]);
+      
+      $conn->commit();
+      return true;
+    }catch(PDOException $e){
+      echo "Erreur lors de la suppression : " . $e->getMessage();
+      return false;
+    }
   }
-}
 
-public static function Modifier($NEtudiant, $nom, $prenom){
-  $conn = Gestionscolarite::connect();
-  try{
-    $request = "UPDATE etudiant SET Nom=:nom, Prenom=:prenom WHERE NEtudiant= :NEtudiant";
-    $stmt = $conn->prepare($request);
-    return $stmt->execute([':NEtudiant' => $NEtudiant, ':nom' => $nom, ':prenom' => $prenom]);
-  }catch(PDOException $e){
-    echo "Erreur lors de la suppression : " . $e->getMessage();
-    return false;
+  public static function Modifier($NEtudiant, $nom, $prenom){
+    $conn = Gestionscolarite::connect();
+    try{
+      $request = "UPDATE etudiant SET Nom=:nom, Prenom=:prenom WHERE NEtudiant= :NEtudiant";
+      $stmt = $conn->prepare($request);
+      return $stmt->execute([':NEtudiant' => $NEtudiant, ':nom' => $nom, ':prenom' => $prenom]);
+    }catch(PDOException $e){
+      echo "Erreur lors de la suppression : " . $e->getMessage();
+      return false;
+    }
   }
-}
+
+  
 }

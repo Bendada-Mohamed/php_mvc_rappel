@@ -70,7 +70,10 @@ class EvaluationModel{
   public static function rechercher($NEtudiant, $CodeMat, $datedebut, $datefin){
     $conn = Gestionscolarite::connect();
     $requete = 
-    "SELECT e.NEtudiant, m.CodeMat, ev.Date, CONCAT(e.NOM, ' ', e.Prenom) as NomComplet, 
+    "SELECT e.NEtudiant, 
+      m.CodeMat, 
+      ev.Date, 
+      CONCAT(e.NOM, ' ', e.Prenom) as NomComplet, 
       m.LibelleMat, 
       m.CoeffMat, 
       ev.Note 

@@ -51,8 +51,3 @@
     <?php endforeach;?>
   </tbody>
 </table>
-<?php 
-echo "<pre>";
-print_r($data);
-echo "</pre>";
-?>
