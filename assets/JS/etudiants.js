@@ -12,3 +12,4 @@
       document.getElementById('modifier-form').action = `index.php?action=ModifierEtudiant&NEtudiant=${id}`;
     });
   });
+  

@@ -1,53 +1,72 @@
-<!-- Tableau d'affichage dynamique des evaluations  -->
-<table class="table table-primary table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Etudiant</th>
-      <th scope="col">Matiere</th>
-      <th scope="col">Coeff</th>
-      <th scope="col">Note/20</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach($data as $value): ?>
-      <tr>
-        <td><?= htmlspecialchars($value['Date']) ?></td>
-        <td><?= htmlspecialchars($value['NomComplet']) ?></td>
-        <td><?= htmlspecialchars($value['LibelleMat']) ?></td>
-        <td><?= htmlspecialchars($value['CoeffMat']) ?></td>
-        <td><?= htmlspecialchars($value['Note']) ?></td>
-        <td>
-          <button 
-          class="btn btn-primary btn-modifier" 
-          data-bs-toggle="modal" 
-          data-bs-target="#modifier-modal" 
-          data-netudiant="<?=htmlspecialchars($value['NEtudiant'])?>"
-          data-codemat="<?=htmlspecialchars($value['CodeMat'])?>"
-          data-date="<?= htmlspecialchars($value['Date']) ?>"
-          data-nomcomplet="<?= htmlspecialchars($value['NomComplet']) ?>"
-          data-matiere="<?= htmlspecialchars($value['LibelleMat']) ?>" 
-          data-coeff="<?= htmlspecialchars($value['CoeffMat']) ?>" 
-          data-note="<?= htmlspecialchars($value['Note']) ?>">
-            Modifier
-          </button>
-          <form 
-            method="post" 
-            action="index.php?action=SupprimerEvaluation" 
-            style="display:inline;">
-            <input type="hidden" name="NEtudiant" value="<?= $value['NEtudiant'] ?>">
-            <input type="hidden" name="CodeMat" value="<?= $value['CodeMat'] ?>">
-            <input type="hidden" name="Date" value="<?= $value['Date'] ?>">
-            <button 
-              type="submit" 
-              class="btn btn-danger" 
-              onclick="return confirm('Voulez-vous vraiment supprimer cet étudiant ?')">
-              Supprimer
-            </button>
-          </form>
-        </td>
-      </tr>
-    <?php endforeach;?>
-  </tbody>
-</table>
+<div class="table-responsive">
+            <table class="table align-middle mb-2">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Étudiant</th>
+                  <th>Matière</th>
+                  <th>Coeff</th>
+                  <th>Note /20</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach($data as $value): ?>
+                <tr>
+                  <td><?= htmlspecialchars($value['Date']) ?></td>
+                  <td><?= htmlspecialchars($value['NomComplet']) ?></td>
+                  <td><?= htmlspecialchars($value['LibelleMat']) ?></td>
+                  <td>
+                    <span class="badge badge-pill badge-coeff">
+                    <?= htmlspecialchars($value['CoeffMat']) ?>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge badge-pill badge-avg-good">
+                      <?= htmlspecialchars($value['Note']) ?>
+                    </span>
+                  </td>
+                  <td class="text-end actions">
+                    <button class="btn btn-sm btn-outline-secondary me-1 btn-modifier"
+                      data-bs-toggle="modal" 
+                      data-bs-target="#modifier-modal" 
+                      data-netudiant="<?=htmlspecialchars($value['NEtudiant'])?>"
+                      data-codemat="<?=htmlspecialchars($value['CodeMat'])?>"
+                      data-date="<?= htmlspecialchars($value['Date']) ?>"
+                      data-nomcomplet="<?= htmlspecialchars($value['NomComplet']) ?>"
+                      data-matiere="<?= htmlspecialchars($value['LibelleMat']) ?>" 
+                      data-coeff="<?= htmlspecialchars($value['CoeffMat']) ?>" 
+                      data-note="<?= htmlspecialchars($value['Note']) ?>">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                  <form 
+                    method="post" 
+                    action="index.php?action=SupprimerEvaluation" 
+                    style="display:inline;">
+                    <input type="hidden" name="NEtudiant" value="<?= $value['NEtudiant'] ?>">
+                    <input type="hidden" name="CodeMat" value="<?= $value['CodeMat'] ?>">
+                    <input type="hidden" name="Date" value="<?= $value['Date'] ?>">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Voulez-vous vraiment supprimer cet étudiant ?')">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <?php endforeach;?>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <small class="text-muted">3 sur 432</small>
+            <nav>
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><span class="page-link">Préc.</span></li>
+                <li class="page-item active"><span class="page-link">1</span></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Suiv.</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>

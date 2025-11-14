@@ -1,31 +1,37 @@
-<!-- Statistiques principales -->
-<div class="row text-center mb-4">
-
-  <div class="col-md-4">
-
-    <div class="card p-3">
-      <h6 class="text-secondary">Étudiants</h6>
-      <h2 class="fw-bold"><?= $nbrEtu[0]['nbr'] ?></h2>
-    </div>
-    
-  </div>
-
-  <div class="col-md-4">
-
-    <div class="card p-3">
-      <h6 class="text-secondary">Matières</h6>
-      <h2 class="fw-bold"><?=$nbrMat[0]['nbr'] ?></h2>
-    </div>
-
-  </div>
-
-  <div class="col-md-4">
-
-    <div class="card p-3">
-      <h6 class="text-secondary">Évaluations</h6>
-      <h2 class="fw-bold"><?= $nbrEva[0]['nbr'] ?></h2>
-    </div>
-
-  </div>
-
-</div>
+<section id="dashboard">
+        <!-- Stats row -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+              <div>
+                <div class="text-muted small mb-1">Étudiants</div>
+                <div class="stat-value"><?= $nbrEtu[0]['nbr'] ?></div>
+              </div>
+              <div class="fs-2 text-primary">
+                <i class="bi bi-people-fill"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+              <div>
+                <div class="text-muted small mb-1">Matières</div>
+                <div class="stat-value"><?=$nbrMat[0]['nbr'] ?></div>
+              </div>
+              <div class="fs-2 text-info">
+                <i class="bi bi-journal-bookmark-fill"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+              <div>
+                <div class="text-muted small mb-1">Évaluations</div>
+                <div class="stat-value"><?= $nbrEva[0]['nbr'] ?></div>
+              </div>
+              <div class="fs-2 text-success">
+                <i class="bi bi-clipboard2-check-fill"></i>
+              </div>
+            </div>
+          </div>
+        </div>

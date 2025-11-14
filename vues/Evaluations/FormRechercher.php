@@ -1,40 +1,45 @@
-<form id="rechercher-form" method="get" action="index.php" class="row gx-3 gy-2 align-items-center">
-
-  <div class="col-sm-3">
-    <label for="Etudiant">Etudiant</label>
-    <select class="form-select" name="Etudiant" id="Etudiant">
-      <option value="" <?=empty($NEtudiant) ? "selected" : "" ?>>Tous...</option>
-      <?php foreach($etudiants as $value): ?>
-      <option value="<?=$value['NEtudiant']?>" <?=(isset($NEtudiant) && $NEtudiant == $value['NEtudiant']) ? "selected" : "" ?>>
-        <?=$value['Nom'] . " " . $value['Prenom']?>
-      </option>
-      <?php endforeach; ?>
-    </select>
-  </div>
-
-  <div class="col-sm-3">
-    <label for="Matiere">Matiere</label>
-    <select class="form-select" name="Matiere" id="Matiere">
-      <option value="" <?=empty($CodeMat) ? "selected" : "" ?>>Toutes...</option>
-      <?php foreach($matieres as $value): ?>
-      <option value="<?=$value['CodeMat']?>" <?=(isset($CodeMat) && $CodeMat == $value['CodeMat']) ? "selected" : "" ?>>
-        <?=$value['LibelleMat']?>
-      </option>
-      <?php endforeach; ?>
-    </select>
-  </div>
-
-  <div class="col-sm-3">
-    <label for="datedebut">Du</label>
-    <input class="form-control" type="date" name="datedebut" id="datedebut" value="<?= $datedebut ?? '' ?>">
-  </div>
-
-  <div class="col-sm-3">
-    <label for="datefin">Au</label>
-    <input class="form-control" name="datefin" type="date" id="datefin" value="<?= $datefin ?? '' ?>">
-  </div>
-
-</form>
+<section id="evaluations" class="">
+      <form id="rechercher-form" method="get" action="index.php" class="row gx-3 gy-2 align-items-center">
+        <div class="page-card mb-3">
+          <!-- Filters row -->
+          <div class="row g-3 mb-3 align-items-end">
+            <div class="col-md-3">
+              <label class="form-label small">Étudiant</label>
+              <select class="form-select" name="Etudiant" id="Etudiant">
+                <option value="" <?=empty($NEtudiant) ? "selected" : "" ?>>Tous...</option>
+                <?php foreach($etudiants as $value): ?>
+                <option value="<?=$value['NEtudiant']?>" <?=(isset($NEtudiant) && $NEtudiant == $value['NEtudiant']) ? "selected" : "" ?>>
+                  <?=$value['Nom'] . " " . $value['Prenom']?>
+                </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small">Matière</label>
+              <select class="form-select" name="Matiere" id="Matiere">
+                    <option value="" <?=empty($CodeMat) ? "selected" : "" ?>>Toutes...</option>
+                    <?php foreach($matieres as $value): ?>
+                    <option value="<?=$value['CodeMat']?>" <?=(isset($CodeMat) && $CodeMat == $value['CodeMat']) ? "selected" : "" ?>>
+                      <?=$value['LibelleMat']?>
+                    </option>
+                    <?php endforeach; ?>
+                  </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Du</label>
+              <input class="form-control" type="date" name="datedebut" id="datedebut" value="<?= $datedebut ?? '' ?>">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small">Au</label>
+              <input class="form-control" name="datefin" type="date" id="datefin" value="<?= $datefin ?? '' ?>">
+            </div>
+      </form>
+            <div class="col-md-2 d-grid">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ajouter-modal" type="button">
+                <i class="bi bi-plus-circle me-1"></i> Nouvelle évaluation
+              </button>
+            </div>
+          </div>
 <script>
 const rechercherForm = document.getElementById('rechercher-form');
 

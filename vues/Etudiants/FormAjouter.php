@@ -1,6 +1,3 @@
-
- <!-- button Nouvel Etudiant -->
-<button data-bs-toggle="modal" data-bs-target="#ajouter-modal" type="button" class="btn btn-secondary mb-3">Nouvel Etudiant</button>
 <!-- Ajouter Modal -->
 <div class="modal" tabindex="-1" id="ajouter-modal">
   <div class="modal-dialog">
@@ -10,7 +7,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form method="post" action="index.php?action=AjouterEtudiant">
+        <form method="post" action="index.php?action=AjouterEtudiant" class="d-flex">
 
           <div class="mb-3">
             <label for="Nom" class="form-label">

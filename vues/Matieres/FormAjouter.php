@@ -1,5 +1,5 @@
 <!-- Ajouter Modal -->
-<button data-bs-toggle="modal" data-bs-target="#ajouter-modal" type="button" class="btn btn-secondary mb-3">Nouvelle Matiere</button>
+
 <div class="modal" tabindex="-1" id="ajouter-modal">
   <div class="modal-dialog">
     <div class="modal-content">

@@ -1,23 +1,25 @@
-<!-- Formulaire de recherche des etudiants -->
-    <form method="get" action="index.php">
-
-      <!-- Ajout du input hidden !!! -->
-      <input type="hidden" name="action" value="RechercherEtudiant">
-
-
-      <input class="form-control" type="text" placeholder="Rechercher (Nom, Prenom)..." name="Valeur" required>
-
-      <div class="mb-3 form-check">
-        <input type="radio" name="filtre" value="Nom" id="Nom" class="form-check-input" required>
-        <label for="Nom" class="form-check-label">Nom</label>
+<!-- Students section -->
+<section id="students" class="">
+  <div class="page-card mb-3">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-3">
+      <div class="d-flex flex-column flex-md-row align-items-md-center gap-2 w-100">
+        <form method="get" action="index.php">
+          <!-- Ajout du input hidden !!! -->
+          <input type="hidden" name="action" value="RechercherEtudiant">
+          <div class="input-group search-input">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-search"></i>
+            </span>
+            <input name="recherche" type="text" class="form-control border-start-0" placeholder="Rechercher (Nom, Prénom)...">
+          </div>
+          <button class="btn btn-outline-secondary d-flex align-items-center gap-1">
+            <i class="bi bi-funnel"></i>
+            Filtres
+          </button>
+        </form>
       </div>
-
-      <div class="mb-3 form-check">
-        <input type="radio" name="filtre" value="Prenom" id="Prenom" class="form-check-input" required>
-        <label for="Prenom" class="form-check-label">Prenom</label>
-      </div>
-
-      <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Rechercher</button>
-      </div>
-    </form>
+      <button data-bs-toggle="modal" data-bs-target="#ajouter-modal" class="btn btn-primary">
+        <i class="bi bi-person-plus-fill me-1"></i>
+        Nouvel étudiant
+      </button>
+    </div>
