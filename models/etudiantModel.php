@@ -1,33 +1,27 @@
 <?php
 require_once "./config/db.php";
 class EtudiantModel{
-public static function lister($param="", $valeur=""){
+public static function lister($recherche=''){
   $conn = Gestionscolarite::connect();
-
   $requete =
   "SELECT et.NEtudiant, et.Nom, et.Prenom, 
     COUNT(m.CodeMat) AS NombreEvaluation,
     SUM(ev.Note * m.CoeffMat) AS AditionProduit,
     SUM(m.CoeffMat) AS AditionCoef
   FROM etudiant et
-  JOIN evaluer ev ON et.NEtudiant = ev.NEtudiant
-  JOIN matiere m ON m.CodeMat = ev.CodeMat";
+  JOIN evaluer ev 
+  ON et.NEtudiant = ev.NEtudiant
+  JOIN matiere m 
+  ON m.CodeMat = ev.CodeMat";
 
-  if($param === "Nom"){
-      $requete .= " WHERE et.Nom LIKE :valeur";
-  } elseif($param === "Prenom"){
-      $requete .= " WHERE et.Prenom LIKE :valeur";
+  if($recherche !== ''){
+    $requete .= " WHERE (et.Nom like '$recherche') OR (et.Prenom like '$recherche') OR (CONCAT(et.Nom, ' ', et.Prenom) like '$recherche')";
   }
 
-  // GROUP BY après le WHERE
   $requete .= " GROUP BY et.NEtudiant";
+
   try {
       $stmt = $conn->prepare($requete);
-
-      if($param === "Nom" || $param === "Prenom"){
-          $stmt->bindValue(':valeur', "%$valeur%", PDO::PARAM_STR);
-      }
-
       $stmt->execute();
       return $stmt->fetchAll();
   }

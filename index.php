@@ -21,7 +21,6 @@ switch($action){
   case 'ModifierEtudiant':
     EtudiantControlleur::Modifier();
     break;
-
   case 'Evaluation';
     EvaluationControlleur::lister();
     break;
@@ -37,7 +36,6 @@ switch($action){
   case 'RechercherEvaluation':
     EvaluationControlleur::rechercher();
     break;
-  
   case 'Matieres':
     MatiereControlleur::lister();
     break;

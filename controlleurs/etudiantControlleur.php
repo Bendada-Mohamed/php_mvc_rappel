@@ -50,11 +50,9 @@ class EtudiantControlleur{
   }
 
   public static function Rechercher(){
-    $param = $_GET['filtre'] ?? '';
-    $valeur = $_GET['Valeur'] ?? '';
-    if($param !== '' && $valeur !== ''){
-      $data = EtudiantModel::lister($param, $valeur);
-
+    $recherche = trim($_GET['recherche']) ?? '';
+    if($recherche !== ''){
+      $data = EtudiantModel::lister($recherche);
     }else{
       $data = EtudiantModel::lister();
     }
