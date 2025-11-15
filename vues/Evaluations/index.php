@@ -7,5 +7,5 @@
 <?php include __DIR__  . "/Liste.php" ?>
 
 <?php include __DIR__  . "/FormModifier.php" ?>
-
-<?php include __DIR__  . "/../layout/FooterEva.php" ?>
+<script src="assets/JS/evaluation.js"></script>
+<?php include __DIR__  . "/../layout/Footer.php" ?>

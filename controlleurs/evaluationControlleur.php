@@ -3,7 +3,14 @@ require_once "./models/evaluationModel.php";
 
 class EvaluationControlleur{
   public static function lister(){
-    [$data, $etudiants, $matieres] = EvaluationModel::lister();
+    $action = $_GET['action'] ?? '';
+    $parPage = 2;
+    $totalElements = EtudiantModel::countAll();
+    $totalPages = ceil($totalElements / $parPage);
+    $pageCourante = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $pageCourante = max(1, min($totalPages, $pageCourante));
+    $offset = ($pageCourante - 1) * $parPage;
+    [$data, $etudiants, $matieres] = EvaluationModel::lister($offset, $parPage);
     include "./vues/Evaluations/index.php";
   }
   public static function modifier(){
@@ -48,6 +55,7 @@ class EvaluationControlleur{
     }
   }
 public static function rechercher() {
+  $action = $_GET['action'] ?? '';
   $NEtudiant = $_GET['Etudiant'] ?? null;
   $CodeMat = $_GET['Matiere'] ?? null;
   $datedebut = $_GET['datedebut'] ?? null;

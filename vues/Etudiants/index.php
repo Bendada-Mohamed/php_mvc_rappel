@@ -10,4 +10,5 @@
 
 <?php include __DIR__  . "/FormModifier.php" ?>
 </div>
-<?php include __DIR__  . "/../layout/FooterEtu.php" ?>
+<script src="assets/JS/etudiants.js"></script>
+<?php include __DIR__  . "/../layout/Footer.php" ?>

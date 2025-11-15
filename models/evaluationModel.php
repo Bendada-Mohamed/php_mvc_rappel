@@ -2,9 +2,10 @@
 require_once "./config/db.php";
 
 class EvaluationModel{
-  public static function lister(){
+  public static function lister($offset = 0, $limit = 10){
     $conn = Gestionscolarite::connect();
-    $requete ="SELECT e.NEtudiant, m.CodeMat, ev.Date, CONCAT(e.NOM, ' ', e.Prenom) as NomComplet, m.LibelleMat, m.CoeffMat, ev.Note FROM etudiant e JOIN evaluer ev ON e.NEtudiant = ev.NEtudiant JOIN matiere m ON m.CodeMat = ev.CodeMat";
+    $requete ="SELECT e.NEtudiant, m.CodeMat, ev.Date, CONCAT(e.NOM, ' ', e.Prenom) as NomComplet, m.LibelleMat, m.CoeffMat, ev.Note FROM etudiant e JOIN evaluer ev ON e.NEtudiant = ev.NEtudiant JOIN matiere m ON m.CodeMat = ev.CodeMat
+    LIMIT $offset, $limit";
 
     try {
       $stmt = $conn->query($requete);
@@ -13,9 +14,14 @@ class EvaluationModel{
       return [$stmt->fetchAll(), $stmt1->fetchAll(), $stmt2->fetchAll()];
     } catch (PDOException $e) {
       echo "Erreur SQL : " . $e->getMessage();
-      return;
+      return [[],[],[]];
     }
   }
+
+  public static function countAll() {
+    $conn = Gestionscolarite::connect();
+    return $conn->query("SELECT COUNT(*) FROM evaluer")->fetchColumn();
+  } 
   public static function modifier($oldDate, $newDate, $note, $NEtudiant, $CodeMat){
     $conn = Gestionscolarite::connect();
     $requete = "UPDATE evaluer SET Date=:newDate, Note=:note WHERE NEtudiant=:NEtudiant AND CodeMat=:CodeMat AND Date=:oldDate";

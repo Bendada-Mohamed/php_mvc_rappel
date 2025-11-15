@@ -3,7 +3,15 @@ require_once "./models/etudiantModel.php";
 
 class EtudiantControlleur{
   public static function lister(){
-    $data = EtudiantModel::lister();
+    $action = $_GET['action'] ?? '';
+    $parPage = 2;
+    $totalElements = EtudiantModel::countAll();
+    $totalPages = ceil($totalElements / $parPage);
+    $pageCourante = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $pageCourante = max(1, min($totalPages, $pageCourante));
+    $offset = ($pageCourante - 1) * $parPage;
+
+    $data = EtudiantModel::lister($recherche = '', $offset, $parPage);
     include "./vues/Etudiants/index.php";
   }
 
@@ -50,6 +58,7 @@ class EtudiantControlleur{
   }
 
   public static function Rechercher(){
+    $action = $_GET['action'] ?? '';
     $recherche = trim($_GET['recherche']) ?? '';
     if($recherche !== ''){
       $data = EtudiantModel::lister($recherche);

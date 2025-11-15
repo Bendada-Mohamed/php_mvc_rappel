@@ -1,36 +1,46 @@
 <?php
 require_once "./config/db.php";
 class EtudiantModel{
-public static function lister($recherche=''){
-  $conn = Gestionscolarite::connect();
-  $requete =
-  "SELECT et.NEtudiant, et.Nom, et.Prenom, 
-    COUNT(m.CodeMat) AS NombreEvaluation,
-    SUM(ev.Note * m.CoeffMat) AS AditionProduit,
-    SUM(m.CoeffMat) AS AditionCoef
-  FROM etudiant et
-  JOIN evaluer ev 
-  ON et.NEtudiant = ev.NEtudiant
-  JOIN matiere m 
-  ON m.CodeMat = ev.CodeMat";
+  public static function lister($recherche = '', $offset = 0, $limit = 10) {
+    $conn = Gestionscolarite::connect();
+    $requete =
+    "SELECT et.NEtudiant, et.Nom, et.Prenom, 
+      COUNT(m.CodeMat) AS NombreEvaluation,
+      SUM(ev.Note * m.CoeffMat) AS AditionProduit,
+      SUM(m.CoeffMat) AS AditionCoef
+    FROM etudiant et
+    JOIN evaluer ev 
+      ON et.NEtudiant = ev.NEtudiant
+    JOIN matiere m 
+      ON m.CodeMat = ev.CodeMat";
 
-  if($recherche !== ''){
-    $requete .= " WHERE (et.Nom like '$recherche') OR (et.Prenom like '$recherche') OR (CONCAT(et.Nom, ' ', et.Prenom) like '$recherche')";
-  }
+    if ($recherche !== '') {
+      $requete .= " 
+        WHERE (et.Nom LIKE :r) 
+        OR (et.Prenom LIKE :r) 
+        OR (CONCAT(et.Nom, ' ', et.Prenom) LIKE :r)
+      ";}
 
-  $requete .= " GROUP BY et.NEtudiant";
+    $requete .= " GROUP BY et.NEtudiant LIMIT :offset, :limit";
 
-  try {
+    try {
       $stmt = $conn->prepare($requete);
+
+      if ($recherche !== '') {
+        $stmt->bindValue(':r', "%$recherche%", PDO::PARAM_STR);
+      }
+
+      $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+      $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+
       $stmt->execute();
       return $stmt->fetchAll();
-  }
-  catch(PDOException $e){
-      echo "Erreur SQL : " . $e->getMessage();
-      return [];
-  }
-}
 
+    } catch (PDOException $e) {
+        echo "Erreur SQL : " . $e->getMessage();
+        return [];
+    }
+  }
 
   public static function Ajouter($nom, $prenom){
     $conn = Gestionscolarite::connect();
@@ -76,6 +86,8 @@ public static function lister($recherche=''){
       return false;
     }
   }
-
-  
+  public static function countAll() {
+    $conn = Gestionscolarite::connect();
+    return $conn->query("SELECT COUNT(DISTINCT NEtudiant) FROM evaluer")->fetchColumn();
+  }  
 }

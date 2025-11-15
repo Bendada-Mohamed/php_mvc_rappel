@@ -28,8 +28,6 @@
                     <button class="btn btn-sm btn-outline-secondary me-1">
                       <i class="bi bi-eye"></i>
                     </button>
-
-
                     <button class="btn btn-sm btn-outline-secondary me-1 btn-modifier" 
                       data-bs-toggle="modal"
                       data-bs-target="#modifier-modal" 
@@ -52,16 +50,30 @@
               </tbody>
             </table>
           </div>
-
           <div class="d-flex justify-content-between align-items-center mt-2">
-            <small class="text-muted">3 sur 18</small>
+            <small class="text-muted">
+              <?=$pageCourante ?> sur <?=$totalPages?>
+            </small>
             <nav>
               <ul class="pagination pagination-sm mb-0">
-                <li class="page-item disabled"><span class="page-link">Préc.</span></li>
-                <li class="page-item active"><span class="page-link">1</span></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Suiv.</a></li>
+                <li class="page-item 
+                <?= ($pageCourante <= 1) ? 'disabled' : '' ?>">
+                  <a class="page-link" href="index.php?action=Matieres&page=<?= $pageCourante - 1 ?>">
+                    Préc.
+                </a>
+                </li>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?= ($i == $pageCourante) ? 'active' : '' ?>">
+                  <a class="page-link" href="index.php?action=Matieres&page=<?= $i ?>">
+                    <?= $i ?>
+                </a>
+                </li>
+                <?php endfor;?>
+                <li class="page-item <?= ($pageCourante >= $totalPages) ? 'disabled' : '' ?>">
+                  <a class="page-link" href="index.php?action=Matieres&page=<?= $pageCourante + 1 ?>">
+                    Suiv.
+                  </a>
+                </li>
               </ul>
             </nav>
           </div>

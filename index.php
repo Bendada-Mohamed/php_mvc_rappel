@@ -5,6 +5,7 @@ require_once "controlleurs/MatiereControlleur.php";
 require_once "controlleurs/TableauDeBordControlleur.php";
 
 $action = $_GET['action'] ?? "";
+
 switch($action){
   case 'Etudiant':
     EtudiantControlleur::lister();

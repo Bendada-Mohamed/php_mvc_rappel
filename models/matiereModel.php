@@ -1,21 +1,26 @@
 <?php
 require_once "./config/db.php";
 class MatiereModel{
-  public static function lister(){
+  public static function lister($offset=0, $limit = 10){
     $conn = Gestionscolarite::connect();
     try{
-      $stmt = $conn->query(
+      $stmt = $conn->prepare(
         "SELECT m.CodeMat, 
           m.LibelleMat, 
-          m.CoeffMat, 
-          SUM(ev.Note) / COUNT(ev.CodeMat) AS 'Moyenne'
-        FROM matiere m
-        JOIN evaluer ev 
+          m.CoeffMat,
+          SUM(ev.Note) / COUNT(ev.Note) AS 'Moyenne'
+        FROM evaluer ev
+        JOIN matiere m 
         ON ev.CodeMat = m.CodeMat 
-        GROUP BY ev.CodeMat");
+        GROUP BY ev.CodeMat
+        LIMIT :offset, :limit");
+      $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+      $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+      $stmt->execute();
       return $stmt->fetchAll();
-    }catch(PDOException){
+    }catch(PDOException $e){
       echo "Erreur SQL : " . $e->getMessage();
+      return [];
     }
   }
   public static function rechercher($libelle){
@@ -84,4 +89,9 @@ class MatiereModel{
       return false;
     }
   }
+  public static function calculertout(){
+    $conn = Gestionscolarite::connect();
+    return $conn->query(
+      "SELECT count(DISTINCT CodeMat) FROM evaluer")->fetchColumn();
+  } 
 }
