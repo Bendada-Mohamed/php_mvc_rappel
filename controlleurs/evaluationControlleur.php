@@ -4,15 +4,29 @@ require_once "./models/evaluationModel.php";
 class EvaluationControlleur{
   public static function lister(){
     $action = $_GET['action'] ?? '';
-    $parPage = 2;
-    $totalElements = EtudiantModel::countAll();
-    $totalPages = ceil($totalElements / $parPage);
+    $NEtudiant = $_GET['Etudiant'] ?? null;
+    $CodeMat = $_GET['Matiere'] ?? null;
+    $datedebut = $_GET['datedebut'] ?? null;
+    $datefin = $_GET['datefin'] ?? null;
     $pageCourante = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $pageCourante = max(1, min($totalPages, $pageCourante));
-    $offset = ($pageCourante - 1) * $parPage;
-    [$data, $etudiants, $matieres] = EvaluationModel::lister($offset, $parPage);
+
+    $parPage = 2;
+
+    if($NEtudiant || $CodeMat || $datedebut || $datefin){
+      $offset = ($pageCourante - 1) * $parPage;
+      [$data, $etudiants, $matieres, $totalElements] = EvaluationModel::lister($NEtudiant, $CodeMat, $datedebut, $datefin, $offset, $parPage);
+      $totalPages = ceil($totalElements / $parPage);
+      $pageCourante = max(1, min($totalPages, $pageCourante));
+      
+    }else{
+      $offset = ($pageCourante - 1) * $parPage;
+      [$data, $etudiants, $matieres, $totalElements] = EvaluationModel::lister($NEtudiant, $CodeMat, $datedebut, $datefin, $offset, $parPage);
+      $totalPages = ceil($totalElements / $parPage);
+      $pageCourante = max(1, min($totalPages, $pageCourante));
+    }
     include "./vues/Evaluations/index.php";
   }
+
   public static function modifier(){
     if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_GET['NEtudiant']) && isset($_GET['CodeMat']) && isset($_GET['date'])){
       $NEtudiant = $_GET['NEtudiant'];
@@ -54,15 +68,5 @@ class EvaluationControlleur{
       self::lister();
     }
   }
-public static function rechercher() {
-  $action = $_GET['action'] ?? '';
-  $NEtudiant = $_GET['Etudiant'] ?? null;
-  $CodeMat = $_GET['Matiere'] ?? null;
-  $datedebut = $_GET['datedebut'] ?? null;
-  $datefin = $_GET['datefin'] ?? null;
 
-  [$data, $etudiants, $matieres] = EvaluationModel::rechercher($NEtudiant, $CodeMat, $datedebut, $datefin);
-  
-  include "./vues/Evaluations/index.php";
-}
 }

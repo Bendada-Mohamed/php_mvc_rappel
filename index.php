@@ -35,7 +35,7 @@ switch($action){
     EvaluationControlleur::ajouter();
     break;
   case 'RechercherEvaluation':
-    EvaluationControlleur::rechercher();
+    EvaluationControlleur::lister();
     break;
   case 'Matieres':
     MatiereControlleur::lister();
