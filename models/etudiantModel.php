@@ -18,7 +18,8 @@ class EtudiantModel{
       $requete .= " 
         WHERE (et.Nom LIKE :r) 
         OR (et.Prenom LIKE :r) 
-        OR (CONCAT(et.Nom, ' ', et.Prenom) LIKE :r)
+        OR (CONCAT(et.Nom, ' ', et.Prenom) LIKE :r) 
+        OR (CONCAT(et.Prenom, ' ', et.Nom) LIKE :r)
       ";}
 
     $requete .= " GROUP BY et.NEtudiant LIMIT :offset, :limit";
@@ -86,8 +87,22 @@ class EtudiantModel{
       return false;
     }
   }
-  public static function countAll() {
+  public static function countAll($param="") {
     $conn = Gestionscolarite::connect();
-    return $conn->query("SELECT COUNT(DISTINCT NEtudiant) FROM evaluer")->fetchColumn();
+    $requete = "SELECT COUNT(DISTINCT ev.NEtudiant) FROM evaluer ev";
+    if($param !== ""){
+      $requete .= " JOIN etudiant e ON ev.NEtudiant = e.NEtudiant WHERE (e.Nom LIKE :r)  OR (e.Prenom LIKE :r) OR (CONCAT(e.Nom, ' ', e.Prenom) LIKE :r) OR (CONCAT(e.Prenom, ' ', e.Nom) LIKE :r)";
+      try {
+        $stmt = $conn->prepare($requete);
+        $like = "%$param%";
+        if($stmt->execute([":r" => $like])){
+          return (int)$stmt->fetchColumn();
+        }
+      } catch (PDOException $e) {
+         echo "Error sql : " . $e->getMessage();
+         return 0;
+      }
+    }
+    return (int)$conn->query($requete)->fetchColumn();
   }  
 }

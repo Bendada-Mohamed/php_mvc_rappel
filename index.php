@@ -17,7 +17,7 @@ switch($action){
     EtudiantControlleur::Supprimer();
     break;
   case 'RechercherEtudiant':
-    EtudiantControlleur::Rechercher();
+    EtudiantControlleur::lister();
     break;
   case 'ModifierEtudiant':
     EtudiantControlleur::Modifier();
