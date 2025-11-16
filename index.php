@@ -41,7 +41,7 @@ switch($action){
     MatiereControlleur::lister();
     break;
   case 'RechercherMatiere':
-    MatiereControlleur::rechercher();
+    MatiereControlleur::lister();
     break;
   case 'ModifierMatiere':
     MatiereControlleur::modifier();

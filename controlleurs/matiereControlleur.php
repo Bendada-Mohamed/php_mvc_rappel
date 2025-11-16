@@ -3,19 +3,24 @@ require_once "./models/matiereModel.php";
 class MatiereControlleur{
   public static function lister(){
     $action = $_GET['action'] ?? '';
-    $parPage = 2;
-    $totalElements = MatiereModel::calculertout();
-    $totalPages = ceil($totalElements / $parPage);
     $pageCourante = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $pageCourante = max(1, min($totalPages, $pageCourante));
-    $offset = ($pageCourante - 1) * $parPage;
-    $data = MatiereModel::lister($offset, $parPage);
-    include "./vues/Matieres/index.php";
-  }
-  public static function rechercher(){
-    $action = $_GET['action'] ?? '';
-    $libelle = trim($_GET['libelle']) ?? '';
-    $data = MatiereModel::rechercher($libelle);
+    $recherche = trim($_GET['libelle'] ?? '');
+
+    $parPage = 2;
+
+    if($recherche !== ""){
+      $totalElements = MatiereModel::calculertout($recherche);
+      $totalPages = ceil($totalElements / $parPage);
+      $pageCourante = max(1, min($totalPages, $pageCourante));
+      $offset = ($pageCourante - 1) * $parPage;
+      $data = MatiereModel::rechercher($recherche);
+    }else{
+      $totalElements = MatiereModel::calculertout();
+      $totalPages = ceil($totalElements / $parPage);
+      $pageCourante = max(1, min($totalPages, $pageCourante));
+      $offset = ($pageCourante - 1) * $parPage;
+      $data = MatiereModel::lister($offset, $parPage);
+    }
     include "./vues/Matieres/index.php";
   }
   public static function modifier(){

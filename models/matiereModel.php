@@ -42,6 +42,22 @@ class MatiereModel{
       echo "Erreur SQL : " . $e->getMessage();
     }
   }
+  public static function calculertout($param=""){
+    $conn = Gestionscolarite::connect();
+    $requete = "SELECT count(DISTINCT ev.CodeMat) FROM evaluer ev";
+    if($param !== ""){
+      $requete .= " JOIN matiere m ON m.CodeMat = ev.CodeMat WHERE LibelleMat = :r";
+      try {
+        $stmt = $conn->prepare($requete);
+        $stmt->execute([':r' => $param]);
+        return $stmt->fetchColumn();
+      } catch (PDOException $e) {
+          echo "Erreur SQL : " . $e->getMessage();
+          return 0;
+      }
+    }
+    return $conn->query($requete)->fetchColumn();
+  } 
 
   public static function modifier($codeMat, $libelle, $coeff){
     $conn = Gestionscolarite::connect();
@@ -89,9 +105,5 @@ class MatiereModel{
       return false;
     }
   }
-  public static function calculertout(){
-    $conn = Gestionscolarite::connect();
-    return $conn->query(
-      "SELECT count(DISTINCT CodeMat) FROM evaluer")->fetchColumn();
-  } 
+
 }
